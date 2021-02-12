@@ -14,8 +14,7 @@ int main() {
     std::thread agentThread(createAgentInNewThread, environnement);
 
     while (true) {
-        std::cout << "main thread" << std::endl;
+        //main loop
     }
-
     return 0;
 }

@@ -5,7 +5,7 @@
 class Capteur {
 public:
 	Capteur(Environnement* environnement);
-
+	Grid* ObserveEnvironmentWithAllMySensors();
 private:
 	Environnement* environnement;
 };
