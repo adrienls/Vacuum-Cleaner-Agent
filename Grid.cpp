@@ -16,16 +16,18 @@ Grid::Grid(int nb_rows, int nb_cols, int value) {
 }
 
 int Grid::get(int row, int col) {
-	return this->vector[(row-1) * this->nb_cols + col];
+	long int index = row * this->nb_cols + col;
+	return this->vector[index];
 }
 
 void Grid::set(int row, int col, int value) {
-	this->vector[(row-1) * this->nb_cols + col] = value;
+	long int index = row * this->nb_cols + col;
+	this->vector[index] = value;
 }
 
 void Grid::print() {
-	for (int i = 1; i <= this->nb_rows; i++) {
-		for (int j = 1; j <= this->nb_cols; j++) {
+	for (int i = 0; i < this->nb_rows; i++) {
+		for (int j = 0; j < this->nb_cols; j++) {
 			std::cout << this->get(i, j) << " ";
 		}
 		std::cout << std::endl;
@@ -42,8 +44,8 @@ int Grid::getNbRows() {
 
 Grid* Grid::copy() {
 	Grid* grid = new Grid(this->getNbRows(), this->getNbCols());
-	for (int row = 1; row <= this->getNbRows(); row++) {
-		for (int col = 1; col <= this->getNbCols(); col++) {
+	for (int row = 0; row < this->getNbRows(); row++) {
+		for (int col = 0; col < this->getNbCols(); col++) {
 			grid->set(row, col, this->get(row, col));
 		}
 	}

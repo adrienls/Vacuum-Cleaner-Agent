@@ -22,11 +22,11 @@ private:
 	Grid* grid;
 
 	//desires
-	std::vector<int[2]> jowelCells;
-	std::vector<int[2]> dirtyCells;
+	std::vector<int> jowelCells;
+	std::vector<int> dirtyCells;
 
 	//intention
-	std::vector<int[2]> parcours;
+	std::vector<int> parcours;
 
 	bool amIAlive();
 	void updateMyState();

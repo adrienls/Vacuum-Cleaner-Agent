@@ -14,7 +14,8 @@ int main() {
     std::thread agentThread(createAgentInNewThread, environnement);
 
     while (true) {
-        //main loop
+        environnement->getGrid()->print();
+        std::cout << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl << std::endl;
     }
     return 0;
 }
