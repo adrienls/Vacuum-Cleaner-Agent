@@ -2,7 +2,6 @@
 #include <iostream>
 
 Agent::Agent(Environnement* environnement) {
-	while (true) {
-		std::cout << "agent thread" << std::endl;
-	}
+	this->capteur = new Capteur(environnement);
+	this->effecteur = new Effecteur(environnement);
 }
