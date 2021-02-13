@@ -9,10 +9,16 @@ private:
     unsigned short nbJewel;
     unsigned short nbDust;
     Grid grid;
+
+    void randomElement(Cell element);
+
 public:
     Environment() : running(true), nbJewel(0), nbDust(0), grid(5, 5) {}
     virtual ~Environment() = default;
 
+    void display(){
+        grid.display();
+    }
     bool isRunning() const {
         return running;
     }
@@ -28,21 +34,14 @@ public:
     Cell getCell(unsigned int column, unsigned int row){
         grid.getCell(column, row);
     }
-    void cleanCell(unsigned int column, unsigned int row){
-        grid.setCell(column, row, empty);
-    }
-    void pickUpJewel(unsigned int column, unsigned int row){
-        Cell pickUp = grid.getCell(column, row);
-        if (pickUp == both){
-            grid.setCell(column, row, dust);
-        }
-        else if (pickUp == jewel){
-            grid.setCell(column, row, empty);
-        }
-    }
-    void display(){
-        grid.display();
-    }
+    void cleanCell(unsigned int column, unsigned int row);
+    void pickUpJewel(unsigned int column, unsigned int row);
+
+    bool shouldThereBeANewDirtySpace() const;
+    bool shouldThereBeANewLostJewel() const;
+
+    void generateDirt();
+    void generateJewel();
 
 };
 

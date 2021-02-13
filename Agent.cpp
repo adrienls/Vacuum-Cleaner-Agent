@@ -46,12 +46,12 @@ void Agent::informedExploration() {
 	//TODO
 }
 
-Grid* Agent::Expand(int X, int Y) {
+Grid* Agent::Expand(unsigned int x, unsigned int y) {
 	/*this->sensor->ObserveAdjacentEnvironment(X, Y);*/
 }
 //<----------------------------------------------- TODO HERE ------------------------------------------------------------------------------------------------>
 
-void Agent::justDoIt(int step) {
+void Agent::justDoIt(unsigned int step) {
 	x = path[step];
 	y = path[step + 1];
 	electricity--;
@@ -70,4 +70,8 @@ void Agent::chooseAnAction() {
 		effector.clean(x, y);
 	}
 		
+}
+
+void Agent::observeEnvironmentWithAllMySensors() {
+
 }

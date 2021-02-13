@@ -28,18 +28,19 @@ private:
     // Intention
     vector<int> path;
 
-    bool amIAlive() const;
-    void updateMyState();
-    void chooseAnAction();
-    void justDoIt(int step);
-
     void informedExploration();
     void uninformedExploration();
-    Grid* Expand(int X, int Y);
+    Grid* Expand(unsigned int x, unsigned int y);
 
 public:
     explicit Agent(Environment &environment) : environment(environment), sensor(environment), effector(environment), isAlive(true), x(0), y(0), score(0), electricity(0) {}
     virtual ~Agent() = default;
+
+    bool amIAlive() const;
+    void observeEnvironmentWithAllMySensors();
+    void updateMyState();
+    void chooseAnAction();
+    void justDoIt(unsigned int step);
 };
 
 #endif //VACUUM_CLEANER_AGENT_AGENT_H
