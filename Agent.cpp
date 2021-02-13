@@ -48,10 +48,10 @@ void Agent::updateMyState() {
 //<----------------------------------------------- TODO HERE ----------------------------------------------------------------------------------------------->
 void Agent::explorationNonInforme() {
 	//TODO
-	Grid* fringeNodes;
-	//Récupération des cases adjacentes
-	fringeNodes = this->capteur->ObserveAdjacentEnvironment(this->X, this->Y);
-	int size = fringeNodes->getNbRows() * fringeNodes->getNbCols();
+	//Grid* fringeNodes;
+	////Récupération des cases adjacentes
+	//fringeNodes = this->capteur->ObserveAdjacentEnvironment(this->X, this->Y);
+	//int size = fringeNodes->getNbRows() * fringeNodes->getNbCols();
 	
 
 	
@@ -62,7 +62,7 @@ void Agent::explorationInforme() {
 }
 
 Grid* Agent::Expand(int X, int Y) {
-	this->capteur->ObserveAdjacentEnvironment(X, Y);
+	/*this->capteur->ObserveAdjacentEnvironment(X, Y);*/
 }
 //<----------------------------------------------- TODO HERE ------------------------------------------------------------------------------------------------>
 
