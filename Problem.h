@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-#pragma once
-#include"Environnement.h"
-#include"States.h"
-#include<vector>
-
-enum Mouve {
-	GAUCHE = 0,
-	HAUT = 1,
-	DROITE = 2,
-	BAS = 3
-};
-
-class Problem {
-	
-public:
-	bool goalAchieved();
-	std::vector<std::pair<Mouve,States>> Succession();
-	Problem(std::vector<int> initial, std::vector<Mouve> mouvesAvaliable, int cost, Environnement env);
-private:
-	std::vector<int> initialState;
-	std::vector<Mouve> mouvesAvaliable;
-	int actionCost;
-	Environnement* environnement;
-};
-=======
 #ifndef VACUUM_CLEANER_AGENT_PROBLEM_H
 #define VACUUM_CLEANER_AGENT_PROBLEM_H
 
@@ -56,4 +30,3 @@ public:
 };
 
 #endif //VACUUM_CLEANER_AGENT_PROBLEM_H
->>>>>>> 06e9bc93da3e1a9e1fa70a8ba97b7eb5887a2a5b
