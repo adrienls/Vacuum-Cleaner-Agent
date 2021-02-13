@@ -34,4 +34,5 @@ private:
 	void justDoIt(int etape);
 	void explorationInforme();
 	void explorationNonInforme();
+	Grid* Expand(int X, int Y);
 };

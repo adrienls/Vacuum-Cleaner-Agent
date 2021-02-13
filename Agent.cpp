@@ -41,14 +41,26 @@ void Agent::updateMyState() {
 	this->explorationNonInforme();
 	//this->explorationInforme();
 }
-
+//<----------------------------------------------- TODO HERE ----------------------------------------------------------------------------------------------->
 void Agent::explorationNonInforme() {
+	//TODO
+	Grid* fringeNodes;
+	//Récupération des cases adjacentes
+	fringeNodes = this->capteur->ObserveAdjacentEnvironment(this->X, this->Y);
+	int size = fringeNodes->getNbRows() * fringeNodes->getNbCols();
+	
+
+	
+}
+
+void Agent::explorationInforme() {
 	//TODO
 }
 
-void Agent::explorationNonInforme() {
-	//TODO
+Grid* Agent::Expand(int X, int Y) {
+	this->capteur->ObserveAdjacentEnvironment(X, Y);
 }
+//<----------------------------------------------- TODO HERE ------------------------------------------------------------------------------------------------>
 
 void Agent::justDoIt(int etape) {
 	int* coords = this->parcours[etape];
