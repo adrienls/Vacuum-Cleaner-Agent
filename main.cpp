@@ -1,17 +1,16 @@
 #include <thread>
-#include <iostream>
 #include "Agent.h"
-#include "Environnement.h"
+#include "Environment.h"
 
-void createAgentInNewThread(Environnement* environnement) {
-    new Agent(environnement);
+void createAgentInNewThread(Environment* environment) {
+    new Agent(environment);
 }
 
 int main() {
 
-    Environnement* environnement = new Environnement();
+    Environment* environment = new Environment();
 
-    std::thread agentThread(createAgentInNewThread, environnement);
+    std::thread agentThread(createAgentInNewThread, environment);
 
     while (true) {
         // main thread

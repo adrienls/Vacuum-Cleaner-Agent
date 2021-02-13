@@ -1,87 +1,73 @@
 #include "Agent.h"
-#include <iostream>
 
-Agent::Agent(Environnement* environnement) {
-	this->capteur = new Capteur(environnement);
-	this->effecteur = new Effecteur(environnement);
-	this->X = 0;
-	this->Y = 0;
-	this->electricite = 0;
-	this->isAlive = true;
-	while (this->amIAlive()) {
-		this->updateMyState();
-		for (int etape = 0; etape < this->parcours.size(); etape = etape + 2) {
-			this->justDoIt(etape);
-			this->chooseAnAction();
-		}
-	}
-}
-
-bool Agent::amIAlive() {
+bool Agent::amIAlive() const {
 	return this->isAlive;
 }
 
 void Agent::updateMyState() {
 
 	this->dirtyCells.clear();
-	this->jowelCells.clear();
-	this->parcours.clear();
+	this->jewelCells.clear();
+	this->path.clear();
 
-	Grid* grid = this->capteur->ObserveEnvironmentWithAllMySensors();
+	Grid grid = sensor.ObserveEnvironmentWithAllMySensors();
+	unsigned int nbColumn = grid.getNbCol();
+	unsigned int nbRow = grid.getNbRow();
 
-	for (int row = 1; row < grid->getNbRows(); row++) {
-		for (int col = 1; col < grid->getNbCols(); col++) {
-			if (grid->get(row, col) == 2 || grid->get(row, col) == 4) {
-				this->dirtyCells.push_back(row);
-				this->dirtyCells.push_back(col);
+	for (unsigned int column = 0; column < nbColumn; column++) {
+		for (int row = 1; row < nbRow; row++) {
+			if (grid.getCell(column, row) == dust || grid.getCell(column, row) == both) {
+				dirtyCells.push_back(column);
+				dirtyCells.push_back(row);
 			}
-			if (grid->get(row, col) == 3 || grid->get(row, col) == 4) {
-				this->jowelCells.push_back(row);
-				this->jowelCells.push_back(col);
+			if (grid.getCell(column, row) == jewel || grid.getCell(column, row) == both) {
+				jewelCells.push_back(column);
+				jewelCells.push_back(row);
 			}
 		}
 	}
 
-	this->explorationNonInforme();
-	//this->explorationInforme();
+    uninformedExploration();
+	//informedExploration();
 }
 //<----------------------------------------------- TODO HERE ----------------------------------------------------------------------------------------------->
-void Agent::explorationNonInforme() {
+void Agent::uninformedExploration() {
 	//TODO
 	//Grid* fringeNodes;
-	////Récupération des cases adjacentes
-	//fringeNodes = this->capteur->ObserveAdjacentEnvironment(this->X, this->Y);
+	////Rï¿½cupï¿½ration des cases adjacentes
+	//fringeNodes = this->sensor->ObserveAdjacentEnvironment(this->X, this->Y);
 	//int size = fringeNodes->getNbRows() * fringeNodes->getNbCols();
 	
 
 	
 }
 
-void Agent::explorationInforme() {
+void Agent::informedExploration() {
 	//TODO
 }
 
 Grid* Agent::Expand(int X, int Y) {
-	/*this->capteur->ObserveAdjacentEnvironment(X, Y);*/
+	/*this->sensor->ObserveAdjacentEnvironment(X, Y);*/
 }
 //<----------------------------------------------- TODO HERE ------------------------------------------------------------------------------------------------>
 
-void Agent::justDoIt(int etape) {
-	this->X = this->parcours[etape];
-	this->Y = this->parcours[etape + 1];
-	this->electricite--;
+void Agent::justDoIt(int step) {
+	x = path[step];
+	y = path[step + 1];
+	electricity--;
 }
 
 void Agent::chooseAnAction() {
-	if (this->grid->get(this->X, this->Y) == 2) {
-		this->effecteur->clean(this->X, this->Y);
+    Cell cell = environment.getCell(x, y);
+	if (cell == dust) {
+		effector.clean(x, y);
 	}
-	if (this->grid->get(this->X, this->Y) == 3) {
-		this->effecteur->pickUp(this->X, this->Y);
+	if (cell == jewel) {
+		effector.pickUp(x, y);
 	}
-	if (this->grid->get(this->X, this->Y) == 4) {
-		this->effecteur->pickUp(this->X, this->Y);
-		this->effecteur->clean(this->X, this->Y);
+	if (cell == both) {
+		effector.pickUp(x, y);
+		effector.clean(x, y);
 	}
 		
 }

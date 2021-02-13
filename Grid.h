@@ -1,20 +1,34 @@
-#pragma once
+#ifndef VACUUM_CLEANER_AGENT_GRID_H
+#define VACUUM_CLEANER_AGENT_GRID_H
 
 #include <vector>
+using std::vector;
+enum Cell {empty, dust, jewel, both};
 
 class Grid {
 private:
-	std::vector<int> vector;
-	int nb_rows;
-	int nb_cols;
-
+    unsigned int nbCol;
+    unsigned int nbRow;
+    vector<vector<Cell>> grid;
 public:
-	Grid(int nb_rows, int nb_cols);
-	Grid(int nb_rows, int nb_cols, int value);
-	int get(int row, int col);
-	void set(int row, int col, int value);
-	void print();
-	int getNbRows();
-	int getNbCols();
-	Grid* copy();
+    Grid(unsigned int nbCol, unsigned int nbRow, Cell initialValue = empty);
+    virtual ~Grid() = default;
+
+    unsigned int getNbCol() const {
+        return nbCol;
+    }
+    unsigned int getNbRow() const {
+        return nbRow;
+    }
+
+    Cell getCell(unsigned int column, unsigned int row){
+        return grid[column][row];
+    }
+    void setCell(unsigned int column, unsigned int row, Cell value){
+        grid[column][row] = value;
+    }
+    void display();
 };
+
+
+#endif //VACUUM_CLEANER_AGENT_GRID_H
