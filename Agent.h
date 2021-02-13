@@ -1,38 +1,46 @@
-#pragma once
+#ifndef VACUUM_CLEANER_AGENT_AGENT_H
+#define VACUUM_CLEANER_AGENT_AGENT_H
 
-#include "Environnement.h"
-#include "Capteur.h"
-#include "Effecteur.h"
+#include "Environment.h"
+#include "Sensor.h"
+#include "Effector.h"
 #include <vector>
 
+using std::vector;
+
 class Agent {
-public:
-	Agent(Environnement* environnement);
-
 private:
-	Capteur* capteur;
-	Effecteur* effecteur;
+    Environment environment;
+    Sensor sensor;
+    Effector effector;
 
-	//belief
-	bool isAlive;
-	int X;
-	int Y;
-	float score;
-	int electricite;
-	Grid* grid;
+    // Belief
+    bool isAlive;
+    unsigned int x;
+    unsigned int y;
+    float score;
+    unsigned int electricity;
 
-	//desires
-	std::vector<int> jowelCells;
-	std::vector<int> dirtyCells;
+    // Desires
+    vector<int> jewelCells;
+    vector<int> dirtyCells;
 
-	//intention
-	std::vector<int> parcours;
+    // Intention
+    vector<int> path;
 
-	bool amIAlive();
-	void updateMyState();
-	void chooseAnAction();
-	void justDoIt(int etape);
-	void explorationInforme();
-	void explorationNonInforme();
-	Grid* Expand(int X, int Y);
+    bool amIAlive() const;
+    void updateMyState();
+    void chooseAnAction();
+    void justDoIt(int step);
+
+    void informedExploration();
+    void uninformedExploration();
+    Grid* Expand(int X, int Y);
+
+public:
+    explicit Agent(Environment &environment) : environment(environment), sensor(environment), effector(environment), isAlive(true), x(0), y(0), score(0), electricity(0) {}
+    virtual ~Agent() = default;
 };
+
+#endif //VACUUM_CLEANER_AGENT_AGENT_H
+
