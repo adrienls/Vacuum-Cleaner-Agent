@@ -4,13 +4,13 @@
 Agent::Agent(Environnement* environnement) {
 	this->capteur = new Capteur(environnement);
 	this->effecteur = new Effecteur(environnement);
-	this->X = 1;
-	this->Y = 1;
+	this->X = 0;
+	this->Y = 0;
 	this->electricite = 0;
 	this->isAlive = true;
 	while (this->amIAlive()) {
 		this->updateMyState();
-		for (int etape = 0; etape < this->parcours.size(); etape++) {
+		for (int etape = 0; etape < this->parcours.size(); etape = etape + 2) {
 			this->justDoIt(etape);
 			this->chooseAnAction();
 		}
@@ -31,10 +31,14 @@ void Agent::updateMyState() {
 
 	for (int row = 1; row < grid->getNbRows(); row++) {
 		for (int col = 1; col < grid->getNbCols(); col++) {
-			if (grid->get(row, col) == 2 || grid->get(row, col) == 4)
-				this->dirtyCells.push_back({ row, col });
-			if (grid->get(row, col) == 3 || grid->get(row, col) == 4)
-				this->jowelCells.push_back({ row, col });
+			if (grid->get(row, col) == 2 || grid->get(row, col) == 4) {
+				this->dirtyCells.push_back(row);
+				this->dirtyCells.push_back(col);
+			}
+			if (grid->get(row, col) == 3 || grid->get(row, col) == 4) {
+				this->jowelCells.push_back(row);
+				this->jowelCells.push_back(col);
+			}
 		}
 	}
 
@@ -63,9 +67,8 @@ Grid* Agent::Expand(int X, int Y) {
 //<----------------------------------------------- TODO HERE ------------------------------------------------------------------------------------------------>
 
 void Agent::justDoIt(int etape) {
-	int* coords = this->parcours[etape];
-	this->X = coords[0];
-	this->Y = coords[1];
+	this->X = this->parcours[etape];
+	this->Y = this->parcours[etape + 1];
 	this->electricite--;
 }
 
