@@ -6,8 +6,6 @@
 using std::cout, std::endl, std::thread;
 
 void envLoop(Environment* environment){
-    environment->generateDirt();
-    environment->generateDirt();
     while (environment->isRunning()){
         if (environment->shouldThereBeANewDirtySpace()){
             environment->generateDirt();

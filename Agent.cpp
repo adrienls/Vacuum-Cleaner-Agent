@@ -17,7 +17,7 @@ void Agent::updateMyState() {
 	unsigned int nbRow = grid.getNbRow();
 
 	for (unsigned int column = 0; column < nbColumn; column++) {
-		for (int row = 1; row < nbRow; row++) {
+		for (int row = 0; row < nbRow; row++) {
 			if (grid.getCell(column, row) == dust || grid.getCell(column, row) == both) {
 				this->dirtyCells.push_back(make_pair(column, row));
 			}
@@ -59,6 +59,7 @@ void Agent::informedExploration(Pair dest) {
 
     openList.insert(make_pair(0.0, make_pair(x, y)));
 
+    bool first = true;
     while (!openList.empty())
     {
         pair<double, pair<int, int>> p = *openList.begin();
@@ -89,14 +90,16 @@ void Agent::informedExploration(Pair dest) {
                 grid[nextX][nextY].parent_y = y;
 
                 int pathLength = grid[x][y].f;
-
+                if (first) {
+                    pathLength = 2;
+                }
                 int X = nextX;
                 int Y = nextY;
 
                 vector<Pair> path;
-                for (int i = 0; i <= pathLength; i++) path.push_back(make_pair(this->x, this->y));
+                for (int i = 0; i < pathLength; i++) path.push_back(make_pair(this->x, this->y));
 
-                for (int i = pathLength; i > 0; i--) {
+                for (int i = pathLength-1; i > 0; i--) {
                     path[i] = make_pair(X, Y);
                     X = grid[path[i].first][path[i].second].parent_x;
                     Y = grid[path[i].first][path[i].second].parent_y;
@@ -119,8 +122,9 @@ void Agent::informedExploration(Pair dest) {
                 }
             }
         }
+        first = false;
     }
-
+    free(grid);
     return;
 }
 
