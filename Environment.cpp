@@ -28,8 +28,8 @@ bool Environment::shouldThereBeANewLostJewel() const {
 
 void Environment::randomElement(Cell element) {
     random_device rd;
-    unsigned int x = rd() % grid.getNbCol();
-    unsigned int y = rd() % grid.getNbRow();
+    unsigned int x = rd() % (grid.getNbCol()-1);
+    unsigned int y = rd() % (grid.getNbRow()-1);
     while (getCell(x, y) == element || getCell(x, y) == both){
         x = rd() % grid.getNbCol();
         y = rd() % grid.getNbRow();

@@ -2,13 +2,13 @@
 
 unsigned int Effector::clean(unsigned int x, unsigned int y) {
 	int score = 0;
-	if (environment.getCell(x, y) == 2)
+	if (environment.getCell(x, y) == dust)
 		score = 1;
-	if (environment.getCell(x, y) == 3)
+	if (environment.getCell(x, y) == jewel)
 		score = -5;
-	if (environment.getCell(x, y) == 3)
+	if (environment.getCell(x, y) == both)
 		score = -4;
-	//this->environment->clean(x, y);
+	environment.cleanCell(x, y);
 	return score;
 }
 

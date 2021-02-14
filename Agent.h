@@ -5,8 +5,16 @@
 #include "Sensor.h"
 #include "Effector.h"
 #include <vector>
-
-using std::vector;
+typedef std::pair<int, int> Pair;
+using namespace std;
+struct cell
+{
+    int parent_x = -1;
+    int parent_y = -1;
+    double f = FLT_MAX;
+    double g = FLT_MAX;
+    double h = FLT_MAX;
+};
 
 class Agent {
 private:
@@ -22,14 +30,14 @@ private:
     unsigned int electricity;
 
     // Desires
-    vector<int> jewelCells;
-    vector<int> dirtyCells;
+    vector<Pair> jewelCells;
+    vector<Pair> dirtyCells;
 
     // Intention
-    vector<int> path;
+    vector<Pair> path;
 
     void informedExploration();
-    void uninformedExploration();
+    void uninformedExploration(Pair dest);
     Grid* Expand(unsigned int x, unsigned int y);
 
 public:
@@ -41,6 +49,7 @@ public:
     void updateMyState();
     void chooseAnAction();
     void justDoIt(unsigned int step);
+    vector<Pair> getPath();
 };
 
 #endif //VACUUM_CLEANER_AGENT_AGENT_H

@@ -11,7 +11,7 @@ private:
     unsigned int nbRow;
     vector<vector<Cell>> grid;
 public:
-    Grid(unsigned int nbCol, unsigned int nbRow, Cell initialValue = empty);
+    Grid(unsigned int nbCol, unsigned int nbRow, Cell initialValue = Cell::empty);
     virtual ~Grid() = default;
 
     unsigned int getNbCol() const {

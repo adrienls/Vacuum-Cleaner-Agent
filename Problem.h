@@ -23,7 +23,7 @@ public:
         return p;
 	}
 
-    Problem(const vector<int> &initialState, const vector<int> &movesAvailable, int actionCost,
+    Problem(const vector<unsigned int> &initialState, const vector<unsigned int> &movesAvailable, int actionCost,
             const Environment &environment) : initialState(initialState), movesAvailable(movesAvailable),
                                               actionCost(actionCost), environment(environment) {}
     virtual ~Problem() = default;

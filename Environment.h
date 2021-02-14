@@ -32,7 +32,7 @@ public:
         return grid;
     }
     Cell getCell(unsigned int column, unsigned int row){
-        grid.getCell(column, row);
+        return grid.getCell(column, row);
     }
     void cleanCell(unsigned int column, unsigned int row);
     void pickUpJewel(unsigned int column, unsigned int row);
