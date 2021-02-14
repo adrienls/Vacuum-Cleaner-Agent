@@ -5,10 +5,10 @@
 
 class Effector {
 private:
-    Environment environment;
+    Environment* environment;
 
 public:
-	explicit Effector(Environment& environment): environment(environment) {}
+	explicit Effector(Environment* environment): environment(environment) {}
     virtual ~Effector() = default;
 
     unsigned int clean(unsigned int x, unsigned int y);

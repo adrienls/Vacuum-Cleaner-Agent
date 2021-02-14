@@ -18,7 +18,7 @@ struct cell
 
 class Agent {
 private:
-    Environment environment;
+    Environment* environment;
     Sensor sensor;
     Effector effector;
 
@@ -32,16 +32,18 @@ private:
     // Desires
     vector<Pair> jewelCells;
     vector<Pair> dirtyCells;
+    Pair target;
+    bool asTarget = false;
 
     // Intention
     vector<Pair> path;
 
-    void informedExploration();
-    void uninformedExploration(Pair dest);
+    void informedExploration(Pair dest);
+    void unInformedExploration(Pair dest);
     Grid* Expand(unsigned int x, unsigned int y);
 
 public:
-    explicit Agent(Environment &environment) : environment(environment), sensor(environment), effector(environment), isAlive(true), x(0), y(0), score(0), electricity(0) {}
+    explicit Agent(Environment *environment) : environment(environment), sensor(environment), effector(environment), isAlive(true), x(0), y(0), score(0), electricity(0) {}
     virtual ~Agent() = default;
 
     bool amIAlive() const;

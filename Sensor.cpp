@@ -2,7 +2,7 @@
 #include <iostream>
 
 const Grid& Sensor::ObserveEnvironmentWithAllMySensors() {
-	return environment.getGrid();
+	return environment->getGrid();
 }
 
 //const Grid& Sensor::ObserveAdjacentEnvironment(unsigned int x, unsigned int y) {

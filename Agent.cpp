@@ -27,13 +27,18 @@ void Agent::updateMyState() {
 		}
 	}
     if (this->dirtyCells.size() != 0) {
-        uninformedExploration(this->dirtyCells[0]);
+        informedExploration(this->dirtyCells[0]);
         this->dirtyCells.pop_back();
+        for (int i = 0; i < this->path.size(); i++) {
+            printf("->(%d,%d)", this->path[i].first, this->path[i].second);
+        }
+        printf("\n");
     }
-	//informedExploration();
+
+	//unInformedExploration();
 }
 //<----------------------------------------------- TODO HERE ----------------------------------------------------------------------------------------------->
-void Agent::uninformedExploration(Pair dest) {
+void Agent::informedExploration(Pair dest) {
     vector<Pair> path;
 
     set<pair<double, Pair>> openList;
@@ -63,8 +68,7 @@ void Agent::uninformedExploration(Pair dest) {
         x = p.second.first;
         y = p.second.second;
 
-        if (x >= 0 && x < 5 && y >= 0 && y < 5)
-            closedList[x][y] = true;
+        closedList[x][y] = true;
 
         double newG, newH, newF;
 
@@ -84,39 +88,34 @@ void Agent::uninformedExploration(Pair dest) {
                 grid[nextX][nextY].parent_x = x;
                 grid[nextX][nextY].parent_y = y;
 
-                if (x >= 0 && x < 5 && y >= 0 && y < 5) {
-                    int pathLength = grid[x][y].f;
+                int pathLength = grid[x][y].f;
 
-                    int X = nextX;
-                    int Y = nextY;
+                int X = nextX;
+                int Y = nextY;
 
-                    vector<Pair> path;
-                    for (int i = 0; i < pathLength; i++) path.push_back(make_pair(0, 0));
+                vector<Pair> path;
+                for (int i = 0; i <= pathLength; i++) path.push_back(make_pair(this->x, this->y));
 
-                    for (int i = pathLength - 1; i >= 0; i--) {
-                        path[i] = make_pair(X, Y);
-                        X = grid[path[i].first][path[i].second].parent_x;
-                        Y = grid[path[i].first][path[i].second].parent_y;
-                    }
-                    this->path = path;
-                    return;
+                for (int i = pathLength; i > 0; i--) {
+                    path[i] = make_pair(X, Y);
+                    X = grid[path[i].first][path[i].second].parent_x;
+                    Y = grid[path[i].first][path[i].second].parent_y;
                 }
+                this->path = path;
+                return;
             }
             else if (closedList[nextX][nextY] == false) {
-                if (x >= 0 && x < 5 && y >= 0 && y < 5) {
-                    newG = grid[x][y].g + 1.0;
-                    int x = (nextX - dest.first) * (nextX - dest.first) + (nextY - dest.second) * (nextY - dest.second);
-                    newH = sqrt(x);
-                    newF = newG + newH;
+                newG = grid[x][y].g + 1.0;
+                newH = sqrt((nextX - dest.first) * (nextX - dest.first) + (nextY - dest.second) * (nextY - dest.second));
+                newF = newG + newH;
 
-                    if (grid[nextX][nextY].f == FLT_MAX || grid[nextX][nextY].f > newF) {
-                        openList.insert(make_pair(newF, make_pair(nextX, nextY)));
-                        grid[nextX][nextY].f = newF;
-                        grid[nextX][nextY].g = newG;
-                        grid[nextX][nextY].h = newH;
-                        grid[nextX][nextY].parent_x = x;
-                        grid[nextX][nextY].parent_y = y;
-                    }
+                if (grid[nextX][nextY].f == FLT_MAX || grid[nextX][nextY].f > newF) {
+                    openList.insert(make_pair(newF, make_pair(nextX, nextY)));
+                    grid[nextX][nextY].f = newF;
+                    grid[nextX][nextY].g = newG;
+                    grid[nextX][nextY].h = newH;
+                    grid[nextX][nextY].parent_x = x;
+                    grid[nextX][nextY].parent_y = y;
                 }
             }
         }
@@ -125,7 +124,7 @@ void Agent::uninformedExploration(Pair dest) {
     return;
 }
 
-void Agent::informedExploration() {
+void Agent::unInformedExploration(Pair dest) {
 	//TODO
 }
 
@@ -138,11 +137,10 @@ void Agent::justDoIt(unsigned int step) {
 	x = path[step].first;
 	y = path[step].second;
 	electricity--;
-    cout << "moved to (" << x << "," << y << ")" << endl;
 }
 
 void Agent::chooseAnAction() {
-    Cell cell = environment.getCell(x, y);
+    Cell cell = environment->getCell(x, y);
 	if (cell == dust) {
 		effector.clean(x, y);
 	}

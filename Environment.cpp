@@ -1,5 +1,6 @@
 #include "Environment.h"
 #include <random>
+#include <iostream>
 
 using std::random_device;
 
@@ -20,10 +21,12 @@ void Environment::pickUpJewel(unsigned int column, unsigned int row){
 }
 
 bool Environment::shouldThereBeANewDirtySpace() const {
-    return nbDust < 8;
+    //return nbDust < 8;
+    return nbDust < 1;
 }
 bool Environment::shouldThereBeANewLostJewel() const {
-    return nbJewel < 5;
+    //return nbJewel < 5;
+    return nbDust < 0;
 }
 
 void Environment::randomElement(Cell element) {
@@ -35,6 +38,8 @@ void Environment::randomElement(Cell element) {
         y = rd() % grid.getNbRow();
     }
     grid.setCell(x, y, element);
+
+    printf("New element in (%d,%d)\n", x, y);
 }
 void Environment::generateDirt() {
     randomElement(dust);

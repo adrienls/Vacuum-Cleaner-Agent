@@ -5,10 +5,10 @@
 
 class Sensor {
 private:
-    Environment environment;
+    Environment* environment;
 
 public:
-	explicit Sensor(Environment& environment): environment(environment) {}
+	explicit Sensor(Environment* environment): environment(environment) {}
     virtual ~Sensor() = default;
 
     const Grid& ObserveEnvironmentWithAllMySensors();

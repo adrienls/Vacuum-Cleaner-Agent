@@ -6,24 +6,28 @@
 using std::cout, std::endl, std::thread;
 
 void envLoop(Environment* environment){
+    environment->generateDirt();
+    environment->generateDirt();
     while (environment->isRunning()){
         if (environment->shouldThereBeANewDirtySpace()){
             environment->generateDirt();
-            cout << endl << "---------- New DUST ----------" << endl;
+            //cout << endl << "---------- New DUST ----------" << endl;
         }
         if (environment->shouldThereBeANewLostJewel()){
             environment->generateJewel();
-            cout << endl << "---------- New JEWEL ----------" << endl;
+            //cout << endl << "---------- New JEWEL ----------" << endl;
         }
+        //environment->display();
     }
 }
 
 int main() {
 
     Environment environment;
-    Agent agent(environment);
 
-    //thread envThread(envLoop, &environment);
+    thread envThread(envLoop, &environment);
+    
+    Agent agent(&environment);
     
     while (agent.amIAlive()) {
         //agent.observeEnvironmentWithAllMySensors();
@@ -34,7 +38,7 @@ int main() {
         agent.chooseAnAction();
     }
 
-    //envThread.join();
+    envThread.join();
 
     return 0;
 }
