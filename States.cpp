@@ -8,7 +8,7 @@ int States::getGridState() {
 	return this->gridState;
 }
 
-States::States(std::vector<int> pos, int gState) {
+States::States(std::vector<unsigned int> pos, int gState) {
 	this->positon = pos;
 	this->gridState = gState;
 }

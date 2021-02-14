@@ -17,7 +17,7 @@ enum Mouve {
 class Problem {
 private:
     vector<unsigned int> initialState;
-    vector<unsigned int> movesAvailable;
+    vector<Mouve> movesAvailable;
     unsigned int actionCost;
     Environment environment;
 
@@ -25,7 +25,7 @@ public:
     bool goalAchieved();
     vector<int> path();
     std::vector<std::pair<Mouve, States>> Problem::Succession();
-    Problem(const vector<unsigned int> &initialState, const vector<unsigned int> &movesAvailable, int actionCost,
+    Problem(const vector<unsigned int> &initialState, const vector<Mouve> &movesAvailable, int actionCost,
             const Environment &environment) : initialState(initialState), movesAvailable(movesAvailable),
                                               actionCost(actionCost), environment(environment) {}
     virtual ~Problem() = default;
