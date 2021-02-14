@@ -21,18 +21,16 @@ void Environment::pickUpJewel(unsigned int column, unsigned int row){
 }
 
 bool Environment::shouldThereBeANewDirtySpace() const {
-    //return nbDust < 8;
-    return nbDust < 1;
+    return nbDust < 8;
 }
 bool Environment::shouldThereBeANewLostJewel() const {
-    //return nbJewel < 5;
-    return nbDust < 0;
+    return nbJewel < 5;
 }
 
 void Environment::randomElement(Cell element) {
     random_device rd;
-    unsigned int x = rd() % (grid.getNbCol()-1);
-    unsigned int y = rd() % (grid.getNbRow()-1);
+    unsigned int x = rd() % grid.getNbCol();
+    unsigned int y = rd() % grid.getNbRow();
     while (getCell(x, y) == element || getCell(x, y) == both){
         x = rd() % grid.getNbCol();
         y = rd() % grid.getNbRow();
