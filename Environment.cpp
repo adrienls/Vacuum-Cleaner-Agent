@@ -42,7 +42,13 @@ void Environment::randomElement(Cell element) {
     unsigned int x = dist(mt);
     unsigned int y = dist(mt);
 
-    grid.setCell(x, y, element);
+    if (grid.getCell(x, y) != element && grid.getCell(x, y) != empty) {
+        grid.setCell(x, y, both);
+    }
+    else {
+        grid.setCell(x, y, element);
+    }
+    
 }
 void Environment::generateDirt() {
     randomElement(dust);
