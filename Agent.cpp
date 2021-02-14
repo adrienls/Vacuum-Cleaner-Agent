@@ -29,10 +29,6 @@ void Agent::updateMyState() {
     if (this->dirtyCells.size() != 0) {
         informedExploration(this->dirtyCells[0]);
         this->dirtyCells.pop_back();
-        for (int i = 0; i < this->path.size(); i++) {
-            printf("->(%d,%d)", this->path[i].first, this->path[i].second);
-        }
-        printf("\n");
     }
 
 	//unInformedExploration();
@@ -91,15 +87,15 @@ void Agent::informedExploration(Pair dest) {
 
                 int pathLength = grid[x][y].f;
                 if (first) {
-                    pathLength = 2;
+                    pathLength = 1;
                 }
                 int X = nextX;
                 int Y = nextY;
 
                 vector<Pair> path;
-                for (int i = 0; i < pathLength; i++) path.push_back(make_pair(this->x, this->y));
+                for (int i = 0; i <= pathLength; i++) path.push_back(make_pair(this->x, this->y));
 
-                for (int i = pathLength-1; i > 0; i--) {
+                for (int i = pathLength; i > 0; i--) {
                     path[i] = make_pair(X, Y);
                     X = grid[path[i].first][path[i].second].parent_x;
                     Y = grid[path[i].first][path[i].second].parent_y;
@@ -141,19 +137,20 @@ void Agent::justDoIt(unsigned int step) {
 	x = path[step].first;
 	y = path[step].second;
 	electricity--;
+    this->effector.move(x, y);
 }
 
 void Agent::chooseAnAction() {
     Cell cell = environment->getCell(x, y);
 	if (cell == dust) {
-		effector.clean(x, y);
+        this->score = this->score + effector.clean(x, y);
 	}
 	if (cell == jewel) {
 		effector.pickUp(x, y);
 	}
 	if (cell == both) {
 		effector.pickUp(x, y);
-		effector.clean(x, y);
+		this->score = this->score + effector.clean(x, y);
 	}
 		
 }
@@ -164,4 +161,8 @@ void Agent::observeEnvironmentWithAllMySensors() {
 
 vector<Pair> Agent::getPath() {
     return this->path;
+}
+
+float Agent::getScore() {
+    return this->score;
 }

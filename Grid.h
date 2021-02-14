@@ -10,6 +10,7 @@ private:
     unsigned int nbCol;
     unsigned int nbRow;
     vector<vector<Cell>> grid;
+    std::pair<int, int> agentPosition;
 public:
     Grid(unsigned int nbCol, unsigned int nbRow, Cell initialValue = Cell::empty);
     virtual ~Grid() = default;
@@ -28,6 +29,7 @@ public:
         grid[column][row] = value;
     }
     void display();
+    void setAgentPosition(unsigned int x, unsigned int y);
 };
 
 

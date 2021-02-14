@@ -17,6 +17,7 @@ public:
     virtual ~Environment() = default;
 
     void display(){
+        printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         grid.display();
     }
     bool isRunning() const {
@@ -36,6 +37,7 @@ public:
     }
     void cleanCell(unsigned int column, unsigned int row);
     void pickUpJewel(unsigned int column, unsigned int row);
+    void move(unsigned int x, unsigned int y);
 
     bool shouldThereBeANewDirtySpace() const;
     bool shouldThereBeANewLostJewel() const;

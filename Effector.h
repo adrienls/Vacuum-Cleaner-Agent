@@ -13,6 +13,7 @@ public:
 
     unsigned int clean(unsigned int x, unsigned int y);
 	void pickUp(unsigned int x, unsigned int y);
+    void move(unsigned int x, unsigned int y);
 };
 
 #endif //VACUUM_CLEANER_AGENT_EFFECTOR_H

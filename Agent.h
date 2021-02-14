@@ -52,6 +52,7 @@ public:
     void chooseAnAction();
     void justDoIt(unsigned int step);
     vector<Pair> getPath();
+    float getScore();
 };
 
 #endif //VACUUM_CLEANER_AGENT_AGENT_H

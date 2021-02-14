@@ -14,22 +14,33 @@ Grid::Grid(unsigned int nbCol, unsigned int nbRow, Cell initialValue) : nbCol(nb
     }
 }
 
+void Grid::setAgentPosition(unsigned int x, unsigned int y) {
+    this->agentPosition = std::make_pair(x, y);
+}
+
 void Grid::display() {
-    for (const auto& column : grid){
-        for(const auto& row : column){
-            if (row == empty){
-                cout << termcolor::reset;
+    for (int x = 0; x < 5; x++) {
+        for(int y = 0; y < 5; y++){
+            if (this->agentPosition.first == x && this->agentPosition.second == y) {
+                cout << termcolor::red;
+                cout << "A  ";
             }
-            else if (row == dust){
-                cout << termcolor::yellow;
+            else {
+                Cell cell = grid[x][y];
+                if (cell == empty) {
+                    cout << termcolor::reset;
+                }
+                else if (cell == dust) {
+                    cout << termcolor::yellow;
+                }
+                else if (cell == jewel) {
+                    cout << termcolor::blue;
+                }
+                else if (cell == both) {
+                    cout << termcolor::green;
+                }
+                cout << cell << "  ";
             }
-            else if (row == jewel){
-                cout << termcolor::blue;
-            }
-            else if (row == both){
-                cout << termcolor::green;
-            }
-            cout << row << "  ";
         }
         cout << endl;
     }

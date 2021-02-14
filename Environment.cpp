@@ -21,23 +21,28 @@ void Environment::pickUpJewel(unsigned int column, unsigned int row){
 }
 
 bool Environment::shouldThereBeANewDirtySpace() const {
-    return nbDust < 8;
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_real_distribution<double> dist(1.0, 10.0);
+
+    return dist(mt) > 8;
 }
 bool Environment::shouldThereBeANewLostJewel() const {
-    return nbJewel < 5;
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_real_distribution<double> dist(1.0, 10.0);
+
+    return dist(mt) > 9;
 }
 
 void Environment::randomElement(Cell element) {
-    random_device rd;
-    unsigned int x = rd() % grid.getNbCol();
-    unsigned int y = rd() % grid.getNbRow();
-    while (getCell(x, y) == element || getCell(x, y) == both){
-        x = rd() % grid.getNbCol();
-        y = rd() % grid.getNbRow();
-    }
-    grid.setCell(x, y, element);
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_real_distribution<double> dist(0.0, 4.0);
+    unsigned int x = dist(mt);
+    unsigned int y = dist(mt);
 
-    printf("New element in (%d,%d)\n", x, y);
+    grid.setCell(x, y, element);
 }
 void Environment::generateDirt() {
     randomElement(dust);
@@ -48,4 +53,7 @@ void Environment::generateJewel() {
     nbJewel++;
 }
 
+void Environment::move(unsigned int x, unsigned int y) {
+    grid.setAgentPosition(x, y);
+}
 

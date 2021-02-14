@@ -13,5 +13,9 @@ unsigned int Effector::clean(unsigned int x, unsigned int y) {
 }
 
 void Effector::pickUp(unsigned int x, unsigned int y) {
-	//this->environment->pickUp(x, y);
+	this->environment->pickUpJewel(x, y);
+}
+
+void Effector::move(unsigned int x, unsigned int y) {
+	this->environment->move(x, y);
 }
