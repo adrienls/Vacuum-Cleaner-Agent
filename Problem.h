@@ -22,15 +22,9 @@ private:
     Environment environment;
 
 public:
-	bool goalAchieved(){
-	    return false;
-	}
-	vector<int> path(){
-        vector<int> p;
-        p[0] = 1;
-        return p;
-	}
-
+    bool goalAchieved();
+    vector<int> path();
+    std::vector<std::pair<Mouve, States>> Problem::Succession();
     Problem(const vector<unsigned int> &initialState, const vector<unsigned int> &movesAvailable, int actionCost,
             const Environment &environment) : initialState(initialState), movesAvailable(movesAvailable),
                                               actionCost(actionCost), environment(environment) {}
@@ -39,7 +33,7 @@ public:
 
 struct Nodes {
     States state;
-    Nodes parents;
+    Nodes* parents;
 };
 
 #endif //VACUUM_CLEANER_AGENT_PROBLEM_H
