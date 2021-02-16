@@ -16,10 +16,7 @@ public:
     Environment() : running(true), nbJewel(0), nbDust(0), grid(5, 5) {}
     virtual ~Environment() = default;
 
-    void display(){
-        printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        grid.display();
-    }
+    void display();
     bool isRunning() const {
         return running;
     }

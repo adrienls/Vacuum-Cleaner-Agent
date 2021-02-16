@@ -1,7 +1,7 @@
 #include <iostream>
 #include <thread>
-#include "Agent.h"
-#include "Environment.h"
+#include "Agent/Agent.h"
+#include "Environment/Environment.h"
 
 using std::cout, std::endl, std::thread;
 

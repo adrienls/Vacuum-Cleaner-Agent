@@ -1,7 +1,7 @@
 #ifndef VACUUM_CLEANER_AGENT_SENSOR_H
 #define VACUUM_CLEANER_AGENT_SENSOR_H
 
-#include "Environment.h"
+#include "../Environment/Environment.h"
 
 class Sensor {
 private:

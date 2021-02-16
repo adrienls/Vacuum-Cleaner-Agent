@@ -2,7 +2,12 @@
 #include <random>
 #include <iostream>
 
-using std::random_device;
+using std::cout, std::random_device;
+
+void Environment::display(){
+    cout << "\n\n\n\n";
+    grid.display();
+}
 
 void Environment::cleanCell(unsigned int column, unsigned int row) {
     grid.setCell(column, row, empty);

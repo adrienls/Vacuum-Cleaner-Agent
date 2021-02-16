@@ -1,7 +1,7 @@
 #ifndef VACUUM_CLEANER_AGENT_AGENT_H
 #define VACUUM_CLEANER_AGENT_AGENT_H
 
-#include "Environment.h"
+#include "../Environment/Environment.h"
 #include "Sensor.h"
 #include "Effector.h"
 #include <vector>
@@ -52,7 +52,7 @@ public:
     void chooseAnAction();
     void justDoIt(unsigned int step);
     vector<Pair> getPath();
-    float getScore();
+    float getScore() const;
 };
 
 #endif //VACUUM_CLEANER_AGENT_AGENT_H

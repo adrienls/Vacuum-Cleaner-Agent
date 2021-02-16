@@ -1,7 +1,7 @@
 #ifndef VACUUM_CLEANER_AGENT_EFFECTOR_H
 #define VACUUM_CLEANER_AGENT_EFFECTOR_H
 
-#include "Environment.h"
+#include "../Environment/Environment.h"
 
 class Effector {
 private:

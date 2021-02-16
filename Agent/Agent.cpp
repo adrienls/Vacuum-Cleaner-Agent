@@ -19,14 +19,14 @@ void Agent::updateMyState() {
 	for (unsigned int column = 0; column < nbColumn; column++) {
 		for (int row = 0; row < nbRow; row++) {
 			if (grid.getCell(column, row) == dust || grid.getCell(column, row) == both) {
-				this->dirtyCells.push_back(make_pair(column, row));
+				this->dirtyCells.emplace_back(column, row);
 			}
 			if (grid.getCell(column, row) == jewel || grid.getCell(column, row) == both) {
-                this->jewelCells.push_back(make_pair(column, row));
+                this->jewelCells.emplace_back(column, row);
 			}
 		}
 	}
-    if (this->dirtyCells.size() != 0) {
+    if (!this->dirtyCells.empty()) {
         informedExploration(this->dirtyCells[0]);
         this->dirtyCells.pop_back();
     }
@@ -71,10 +71,10 @@ void Agent::informedExploration(Pair dest) {
 
         vector<Pair> neighbours;
 
-        if (x - 1 >= 0 && x - 1 < 5 && y >= 0 && y < 5) neighbours.push_back(make_pair(x - 1, y));
-        if (x + 1 >= 0 && x + 1 < 5 && y >= 0 && y < 5) neighbours.push_back(make_pair(x + 1, y));
-        if (x >= 0 && x < 5 && y + 1 >= 0 && y + 1 < 5) neighbours.push_back(make_pair(x, y + 1));
-        if (x >= 0 && x < 5 && y - 1 >= 0 && y - 1 < 5) neighbours.push_back(make_pair(x, y - 1));
+        if (x - 1 >= 0 && x - 1 < 5 && y >= 0 && y < 5) neighbours.emplace_back(x - 1, y);
+        if (x + 1 >= 0 && x + 1 < 5 && y >= 0 && y < 5) neighbours.emplace_back(x + 1, y);
+        if (x >= 0 && x < 5 && y + 1 >= 0 && y + 1 < 5) neighbours.emplace_back(x, y + 1);
+        if (x >= 0 && x < 5 && y - 1 >= 0 && y - 1 < 5) neighbours.emplace_back(x, y - 1);
 
         for (int i = 0; i < neighbours.size(); i++) {
 
@@ -93,7 +93,7 @@ void Agent::informedExploration(Pair dest) {
                 int Y = nextY;
 
                 vector<Pair> path;
-                for (int i = 0; i <= pathLength; i++) path.push_back(make_pair(this->x, this->y));
+                for (int i = 0; i <= pathLength; i++) path.emplace_back(this->x, this->y);
 
                 for (int i = pathLength; i > 0; i--) {
                     path[i] = make_pair(X, Y);
@@ -103,7 +103,7 @@ void Agent::informedExploration(Pair dest) {
                 this->path = path;
                 return;
             }
-            else if (closedList[nextX][nextY] == false) {
+            else if (!closedList[nextX][nextY]) {
                 newG = grid[x][y].g + 1.0;
                 newH = sqrt((nextX - dest.first) * (nextX - dest.first) + (nextY - dest.second) * (nextY - dest.second));
                 newF = newG + newH;
@@ -163,6 +163,6 @@ vector<Pair> Agent::getPath() {
     return this->path;
 }
 
-float Agent::getScore() {
+float Agent::getScore() const {
     return this->score;
 }
