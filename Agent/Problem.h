@@ -7,12 +7,7 @@
 
 using std::vector;
 
-enum Mouve {
-    GAUCHE = 0,
-    HAUT,
-    DROITE,
-    BAS
-};
+enum Mouve { GAUCHE, HAUT, DROITE, BAS };
 
 class Problem {
 private:
@@ -24,7 +19,7 @@ private:
 public:
     bool goalAchieved();
     vector<int> path();
-    std::vector<std::pair<Mouve, States>> Problem::Succession();
+    vector<std::pair<Mouve, States>> Problem::Succession();
     Problem(const vector<unsigned int> &initialState, const vector<Mouve> &movesAvailable, int actionCost,
             const Environment &environment) : initialState(initialState), movesAvailable(movesAvailable),
                                               actionCost(actionCost), environment(environment) {}
