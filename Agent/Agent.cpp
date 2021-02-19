@@ -45,7 +45,10 @@ void Agent::informedExploration(Pair dest) {
     set<pair<double, Pair>> openList;
 
     bool closedList[5][5];
-    memset(closedList, false, sizeof(closedList));
+    for (int x = 0; x < 5; x++)
+        for (int y = 0; y < 5; y++) {
+            closedList[x][y] = false;
+        }
 
     cell grid[5][5];
 
@@ -113,7 +116,7 @@ void Agent::informedExploration(Pair dest) {
                 newH = sqrt((nextX - dest.first) * (nextX - dest.first) + (nextY - dest.second) * (nextY - dest.second));
                 newF = newG + newH;
 
-                if (grid[nextX][nextY].f == FLT_MAX || grid[nextX][nextY].f > newF) {
+                if (grid[nextX][nextY].f == 999999999 || grid[nextX][nextY].f > newF) {
                     openList.insert(make_pair(newF, make_pair(nextX, nextY)));
                     grid[nextX][nextY].f = newF;
                     grid[nextX][nextY].g = newG;
