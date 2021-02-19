@@ -1,6 +1,7 @@
 #include "Agent.h"
 #include <set>
 #include <iostream>
+#include "../Environment/Graph.h"
 
 bool Agent::amIAlive() const {
 	return this->isAlive;
@@ -12,28 +13,32 @@ void Agent::updateMyState() {
 	this->jewelCells.clear();
 	this->path.clear();
 
-	Grid grid = sensor.ObserveEnvironmentWithAllMySensors();
-	unsigned int nbColumn = grid.getNbCol();
-	unsigned int nbRow = grid.getNbRow();
+    bool informedMode = false;
 
-	for (unsigned int column = 0; column < nbColumn; column++) {
-		for (int row = 0; row < nbRow; row++) {
-			if (grid.getCell(column, row) == dust || grid.getCell(column, row) == both) {
-				this->dirtyCells.emplace_back(column, row);
-			}
-			if (grid.getCell(column, row) == jewel || grid.getCell(column, row) == both) {
-                this->jewelCells.emplace_back(column, row);
-			}
-		}
-	}
-    if (!this->dirtyCells.empty()) {
-        informedExploration(this->dirtyCells[0]);
-        this->dirtyCells.pop_back();
+    if (informedMode) {
+        Pair dest = unInformedExploration();
+        informedExploration(dest);
     }
-
-	//unInformedExploration();
+    else {
+        Pair dest = unInformedExploration();
+        if (dest.first != -1 && dest.second != -1) {
+            int x = this->x;
+            int y = this->y;
+            while (x != dest.first) {
+                if (x > dest.first) x--;
+                else x++;
+                this->path.push_back(make_pair(x, y));
+            }
+            while (y != dest.second) {
+                if (y > dest.second) y--;
+                else y++;
+                this->path.push_back(make_pair(x, y));
+            }
+        }
+        
+    }
 }
-//<----------------------------------------------- TODO HERE ----------------------------------------------------------------------------------------------->
+
 void Agent::informedExploration(Pair dest) {
     vector<Pair> path;
 
@@ -120,19 +125,16 @@ void Agent::informedExploration(Pair dest) {
         }
         first = false;
     }
-    free(grid);
     return;
 }
 
-void Agent::unInformedExploration(Pair dest) {
-	//TODO
+Pair Agent::unInformedExploration() {
+    Grid grid = sensor.ObserveEnvironmentWithAllMySensors();
+    Graph graph = Graph(grid);
+
+    Pair dest = graph.BFS(this->x, this->y);
+    return dest;
 }
-
-//Grid* Agent::Expand(unsigned int x, unsigned int y) {
-//	this->sensor->ObserveAdjacentEnvironment(X, Y);
-//}
-//<----------------------------------------------- TODO HERE ------------------------------------------------------------------------------------------------>
-
 void Agent::justDoIt(unsigned int step) {
 	x = path[step].first;
 	y = path[step].second;
@@ -143,13 +145,17 @@ void Agent::justDoIt(unsigned int step) {
 void Agent::chooseAnAction() {
     Cell cell = environment->getCell(x, y);
 	if (cell == dust) {
+        cout << "aspirer" << endl;
         this->score = this->score + effector.clean(x, y);
 	}
 	if (cell == jewel) {
+        cout << "ramasser" << endl;
 		effector.pickUp(x, y);
 	}
 	if (cell == both) {
+        cout << "ramasser" << endl;
 		effector.pickUp(x, y);
+        cout << "aspirer" << endl;
 		this->score = this->score + effector.clean(x, y);
 	}
 		

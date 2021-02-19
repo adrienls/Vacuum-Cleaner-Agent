@@ -39,7 +39,7 @@ private:
     vector<Pair> path;
 
     void informedExploration(Pair dest);
-    void unInformedExploration(Pair dest);
+    Pair unInformedExploration();
     Grid* Expand(unsigned int x, unsigned int y);
 
 public:
