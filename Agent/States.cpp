@@ -20,3 +20,8 @@ States::States() {
 	this->positon = tmp;
 	this->gridState = 0;
 }
+
+void States::setState(std::vector<unsigned int> pos, int s) {
+	this->positon = pos;
+	this->gridState = s;
+}

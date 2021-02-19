@@ -17,38 +17,38 @@ vector<std::pair<Mouve,States>> Problem::Succession() {
 	vector<std::pair<Mouve,States>> p;
 	vector<unsigned int> nextPos;
 	Grid grid = environment.getGrid();
-	States s = States(initialState, 0);
+	States s = States(initialPos, 0);
 	std::pair<Mouve, States> pb;
 	for each (Mouve var in movesAvailable)
 	{
 		switch (var) {
 		case GAUCHE:
-			nextPos.push_back(this->initialState[0] - 1);
-			nextPos.push_back(this->initialState[1]);
+			nextPos.push_back(this->initialPos[0] - 1);
+			nextPos.push_back(this->initialPos[1]);
 			s = States(nextPos, (int) grid.getCell(nextPos[0], nextPos[1]));
 			pb.first = GAUCHE;
 			pb.second = s;
 			p.push_back(pb);
 			break;
 		case HAUT:
-			nextPos.push_back(this->initialState[0]);
-			nextPos.push_back(this->initialState[1] + 1);
+			nextPos.push_back(this->initialPos[0]);
+			nextPos.push_back(this->initialPos[1] + 1);
 			s = States(nextPos, (int) grid.getCell(nextPos[0], nextPos[1]));
 			pb.first = HAUT;
 			pb.second = s;
 			p.push_back(pb);
 			break;
 		case DROITE:
-			nextPos.push_back(this->initialState[0] + 1);
-			nextPos.push_back(this->initialState[1]);
+			nextPos.push_back(this->initialPos[0] + 1);
+			nextPos.push_back(this->initialPos[1]);
 			s = States(nextPos, (int) grid.getCell(nextPos[0], nextPos[1]));
 			pb.first = DROITE;
 			pb.second = s;
 			p.push_back(pb);
 			break;
 		case BAS:
-			nextPos.push_back(this->initialState[0]);
-			nextPos.push_back(this->initialState[1] - 1);
+			nextPos.push_back(this->initialPos[0]);
+			nextPos.push_back(this->initialPos[1] - 1);
 			s = States(nextPos, (int) grid.getCell(nextPos[0], nextPos[1]));
 			pb.first = BAS;
 			pb.second = s;
@@ -64,3 +64,14 @@ vector<int> Problem::path() {
 	p.push_back(0);
 	return p;
 }
+
+//Nodes Problem::makeTree(Grid env) {
+//	Nodes initialNode;
+//	vector<unsigned int> pos;
+//	int s;
+//	pos = initialPos;
+//	s = env.getCell(pos[0], pos[1]);
+//	initialNode.state.setState(pos, s);
+//	initialNode.parents = NULL;
+//	return initialNode;
+//}
