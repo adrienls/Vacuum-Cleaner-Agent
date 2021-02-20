@@ -22,7 +22,7 @@ public:
         return nbRow;
     }
 
-    Cell getCell(unsigned int column, unsigned int row){
+    Cell getCell(unsigned int column, unsigned int row) const {
         return grid[column][row];
     }
     void setCell(unsigned int column, unsigned int row, Cell value){

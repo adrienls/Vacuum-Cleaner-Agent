@@ -1,6 +1,7 @@
 #include "Agent.h"
 #include <set>
 #include <iostream>
+#include <cmath>
 #include "../Environment/Graph.h"
 
 bool Agent::amIAlive() const {
@@ -22,17 +23,17 @@ void Agent::updateMyState() {
     else {
         Pair dest = unInformedExploration();
         if (dest.first != -1 && dest.second != -1) {
-            int x = this->x;
-            int y = this->y;
-            while (x != dest.first) {
-                if (x > dest.first) x--;
-                else x++;
-                this->path.push_back(make_pair(x, y));
+            unsigned int xAxes = this->x;
+            unsigned int yAxes = this->y;
+            while (xAxes != dest.first) {
+                if (xAxes > dest.first) xAxes--;
+                else xAxes++;
+                this->path.emplace_back(xAxes, yAxes);
             }
-            while (y != dest.second) {
-                if (y > dest.second) y--;
-                else y++;
-                this->path.push_back(make_pair(x, y));
+            while (yAxes != dest.second) {
+                if (yAxes > dest.second) yAxes--;
+                else yAxes++;
+                this->path.emplace_back(xAxes, yAxes);
             }
         }
         
@@ -40,7 +41,7 @@ void Agent::updateMyState() {
 }
 
 void Agent::informedExploration(Pair dest) {
-    vector<Pair> path;
+    vector<Pair> pathCoordinates;
 
     set<pair<double, Pair>> openList;
 
@@ -52,16 +53,16 @@ void Agent::informedExploration(Pair dest) {
 
     cell grid[5][5];
 
-    int x = this->x;
-    int y = this->y;
+    unsigned int xAxes = this->x;
+    unsigned int yAxes = this->y;
 
-    grid[x][y].f = 0.0;
-    grid[x][y].g = 0.0;
-    grid[x][y].h = 0.0;
-    grid[x][y].parent_x = x;
-    grid[x][y].parent_y = y;
+    grid[xAxes][yAxes].f = 0.0;
+    grid[xAxes][yAxes].g = 0.0;
+    grid[xAxes][yAxes].h = 0.0;
+    grid[xAxes][yAxes].parent_x = xAxes;
+    grid[xAxes][yAxes].parent_y = yAxes;
 
-    openList.insert(make_pair(0.0, make_pair(x, y)));
+    openList.insert(make_pair(0.0, make_pair(xAxes, yAxes)));
 
     bool first = true;
     while (!openList.empty())
@@ -70,19 +71,19 @@ void Agent::informedExploration(Pair dest) {
 
         openList.erase(openList.begin());
 
-        x = p.second.first;
-        y = p.second.second;
+        xAxes = p.second.first;
+        yAxes = p.second.second;
 
-        closedList[x][y] = true;
+        closedList[xAxes][yAxes] = true;
 
         double newG, newH, newF;
 
         vector<Pair> neighbours;
 
-        if (x - 1 >= 0 && x - 1 < 5 && y >= 0 && y < 5) neighbours.emplace_back(x - 1, y);
-        if (x + 1 >= 0 && x + 1 < 5 && y >= 0 && y < 5) neighbours.emplace_back(x + 1, y);
-        if (x >= 0 && x < 5 && y + 1 >= 0 && y + 1 < 5) neighbours.emplace_back(x, y + 1);
-        if (x >= 0 && x < 5 && y - 1 >= 0 && y - 1 < 5) neighbours.emplace_back(x, y - 1);
+        if (xAxes - 1 >= 0 && xAxes - 1 < 5 && yAxes >= 0 && yAxes < 5) neighbours.emplace_back(xAxes - 1, yAxes);
+        if (xAxes + 1 >= 0 && xAxes + 1 < 5 && yAxes >= 0 && yAxes < 5) neighbours.emplace_back(xAxes + 1, yAxes);
+        if (xAxes >= 0 && xAxes < 5 && yAxes + 1 >= 0 && yAxes + 1 < 5) neighbours.emplace_back(xAxes, yAxes + 1);
+        if (xAxes >= 0 && xAxes < 5 && yAxes - 1 >= 0 && yAxes - 1 < 5) neighbours.emplace_back(xAxes, yAxes - 1);
 
         for (int i = 0; i < neighbours.size(); i++) {
 
@@ -90,10 +91,10 @@ void Agent::informedExploration(Pair dest) {
             int nextY = neighbours[i].second;
 
             if (nextX == dest.first && nextY == dest.second) {
-                grid[nextX][nextY].parent_x = x;
-                grid[nextX][nextY].parent_y = y;
+                grid[nextX][nextY].parent_x = xAxes;
+                grid[nextX][nextY].parent_y = yAxes;
 
-                int pathLength = grid[x][y].f;
+                int pathLength = grid[xAxes][yAxes].f;
                 if (first) {
                     pathLength = 1;
                 }
@@ -112,17 +113,17 @@ void Agent::informedExploration(Pair dest) {
                 return;
             }
             else if (!closedList[nextX][nextY]) {
-                newG = grid[x][y].g + 1.0;
+                newG = grid[xAxes][yAxes].g + 1.0;
                 newH = sqrt((nextX - dest.first) * (nextX - dest.first) + (nextY - dest.second) * (nextY - dest.second));
                 newF = newG + newH;
 
-                if (grid[nextX][nextY].f == 999999999 || grid[nextX][nextY].f > newF) {
+                if (grid[nextX][nextY].f == FLT_MAX || grid[nextX][nextY].f > newF) {
                     openList.insert(make_pair(newF, make_pair(nextX, nextY)));
                     grid[nextX][nextY].f = newF;
                     grid[nextX][nextY].g = newG;
                     grid[nextX][nextY].h = newH;
-                    grid[nextX][nextY].parent_x = x;
-                    grid[nextX][nextY].parent_y = y;
+                    grid[nextX][nextY].parent_x = xAxes;
+                    grid[nextX][nextY].parent_y = yAxes;
                 }
             }
         }

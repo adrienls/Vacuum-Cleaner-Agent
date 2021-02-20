@@ -5,6 +5,8 @@
 #include "Sensor.h"
 #include "Effector.h"
 #include <vector>
+#include <cfloat>
+
 typedef std::pair<int, int> Pair;
 using namespace std;
 struct cell

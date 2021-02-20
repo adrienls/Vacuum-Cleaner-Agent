@@ -1,29 +1,30 @@
 #include "Graph.h"
 
 //Constructeur
-Graph::Graph(Grid grid) {
+Graph::Graph(const Grid& grid) {
 	//On associe le nombre de sommets
 	V = 25;
 
 	//Nouvelle liste pour stocker les sommet adjacents
 	adj = new list<int>[V];
 
-	int i = 0;
-	for (int x = 0; x < 5; x++) 
-		for (int y = 0; y < 5; y++){
-			Node node;
-			node.x = x;
-			node.y = y;
-			node.value = grid.getCell(x, y);
-			nodes[i] = node;
+	unsigned short i = 0;
+    Node node{0, 0, 0};
+	for (unsigned short x = 0; x < 5; x++) {
+        for (unsigned short y = 0; y < 5; y++){
+            node.x = x;
+            node.y = y;
+            node.value = grid.getCell(x, y);
+            nodes[i] = node;
 
-			if (x != 0) addEdge(i, i - 5);
-			if (x != 4) addEdge(i, i + 5);
-			if (y != 0) addEdge(i, i - 1);
-			if (y != 4) addEdge(i, i + 1);
+            if (x != 0) addEdge(i, i - 5);
+            if (x != 4) addEdge(i, i + 5);
+            if (y != 0) addEdge(i, i - 1);
+            if (y != 4) addEdge(i, i + 1);
 
-			i++;
-		}
+            i++;
+        }
+	}
 }
 
 //Fonction d'ajout d'arrete
@@ -31,7 +32,7 @@ void Graph::addEdge(int v, int w) {
 	adj[v].push_back(w);
 }
 
-//Parcours BFS à partir du sommet donné
+//Parcours BFS ï¿½ partir du sommet donnï¿½
 pair<int, int> Graph::BFS(int x, int y)
 {
 	int s = 5 * x + y;
@@ -41,7 +42,7 @@ pair<int, int> Graph::BFS(int x, int y)
 		visited[i] = false;
 	}
 
-	//Création de la queue des sommet visités
+	//Crï¿½ation de la queue des sommet visitï¿½s
 	list<int> queue;
 
 	//On visite la base du parcours
@@ -59,13 +60,13 @@ pair<int, int> Graph::BFS(int x, int y)
 			return make_pair(node.x, node.y);
 		}
 
-		//On récupère les voisins de ce sommet
+		//On rï¿½cupï¿½re les voisins de ce sommet
 		for (auto i = adj[s].begin(); i != adj[s].end(); i++) {
-			//On s'intéresse aux sommets non visités
+			//On s'intï¿½resse aux sommets non visitï¿½s
 			if (!visited[*i]) {
-				//On les marques comme visités
+				//On les marques comme visitï¿½s
 				visited[*i] = true;
-				//On les ajoutes à la liste des sommets visités
+				//On les ajoutes ï¿½ la liste des sommets visitï¿½s
 				queue.push_back(*i);
 			}
 		}

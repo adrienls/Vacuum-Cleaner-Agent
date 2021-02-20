@@ -19,7 +19,7 @@ private:
 public:
     bool goalAchieved();
     vector<int> path();
-    vector<std::pair<Mouve, States>> Problem::Succession();
+    vector<std::pair<Mouve, States>> Succession();
     Problem(const vector<unsigned int> &initialPos, const vector<Mouve> &movesAvailable, int actionCost,
             const Environment &environment) : initialPos(initialPos), movesAvailable(movesAvailable),
                                               actionCost(actionCost), environment(environment) {}

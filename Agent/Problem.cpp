@@ -19,9 +19,9 @@ vector<std::pair<Mouve,States>> Problem::Succession() {
 	Grid grid = environment.getGrid();
 	States s = States(initialPos, 0);
 	std::pair<Mouve, States> pb;
-	for each (Mouve var in movesAvailable)
+	for (auto Mouve : movesAvailable)
 	{
-		switch (var) {
+		switch (Mouve) {
 		case GAUCHE:
 			nextPos.push_back(this->initialPos[0] - 1);
 			nextPos.push_back(this->initialPos[1]);

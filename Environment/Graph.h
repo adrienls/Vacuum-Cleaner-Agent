@@ -1,4 +1,6 @@
-#pragma once
+#ifndef VACUUM_CLEANER_AGENT_GRAPH_H
+#define VACUUM_CLEANER_AGENT_GRAPH_H
+
 #include<iostream>
 #include<list>
 #include "Grid.h"
@@ -22,11 +24,13 @@ private:
 	Node nodes[25];
 public:
 	//Constructeur
-	Graph(Grid grid);
+	explicit Graph(const Grid& grid);
 
 	//Ajout d'une liaison
 	void addEdge(int v, int w);
 
-	//Le parcours BFS à partir du noeud x y
+	//Le parcours BFS ï¿½ partir du noeud x y
 	pair<int, int> BFS(int x, int y);
 };
+
+#endif //VACUUM_CLEANER_AGENT_GRAPH_H
